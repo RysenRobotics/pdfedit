@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend
+    container_name: pdf-editor-backend
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/outputs:/app/outputs
+    # 可选：扫描件 OCR，需本机装有 tesseract
+    # environment:
+    #   - TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata
+
+  frontend:
+    build: ./frontend
+    container_name: pdf-editor-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_BASE=
